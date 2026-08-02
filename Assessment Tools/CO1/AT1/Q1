@@ -1,0 +1,72 @@
+CLASS Person
+    CHARACTER Name
+    INTEGER Age
+
+    CONSTRUCTOR(name, age)
+        THIS.Name = name
+        THIS.Age = age
+    END CONSTRUCTOR
+END CLASS
+
+CLASS Student INHERITS Person
+    INTEGER RegisterNumber
+    ARRAY Marks[5]
+
+    CONSTRUCTOR(name, age, regNum, marksArray)
+        SUPER(name, age) 
+        THIS.RegisterNumber = regNum
+        THIS.Marks = marksArray
+    END CONSTRUCTOR
+
+    METHOD CalculateAverage()
+        INTEGER sum = 0
+        FOR i FROM 0 TO 4 DO
+            sum = sum + THIS.Marks[i]
+        END FOR
+        RETURN sum / 5.0
+    END METHOD
+END CLASS
+
+CLASS ResearchStudent INHERITS Student
+    CHARACTER ResearchArea
+
+    CONSTRUCTOR(name, age, regNum, marksArray, researchArea)
+        SUPER(name, age, regNum, marksArray) 
+        THIS.ResearchArea = researchArea
+    END CONSTRUCTOR
+
+    METHOD DisplayCompleteDetails()
+        OUTPUT "Name: " + THIS.Name
+        OUTPUT "Age: " + THIS.Age
+        OUTPUT "Register Number: " + THIS.RegisterNumber
+        OUTPUT "Research Area: " + THIS.ResearchArea
+        OUTPUT "Marks: " + THIS.Marks[0] + ", " + THIS.Marks[1] + ", " + THIS.Marks[2] + ", " + THIS.Marks[3] + ", " + THIS.Marks[4]
+        OUTPUT "Calculated Average: " + THIS.CalculateAverage()
+    END METHOD
+END CLASS
+
+
+START
+    
+    OUTPUT "Enter student name:"
+    INPUT studentName
+    
+    OUTPUT "Enter student age:"
+    INPUT studentAge
+    
+    OUTPUT "Enter registration number:"
+    INPUT regNo
+    
+    ARRAY sampleMarks[5]
+    FOR i FROM 0 TO 4
+        OUTPUT "Enter mark " + (i + 1) + ":"
+        INPUT sampleMarks[i]
+    END FOR
+    
+    OUTPUT "Enter research field:"
+    INPUT field
+    
+    ResearchStudent currentStudent = NEW ResearchStudent(studentName, studentAge, regNo, sampleMarks, field)
+    
+    currentStudent.displayCompleteDetails()
+END
